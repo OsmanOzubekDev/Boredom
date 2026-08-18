@@ -1,15 +1,21 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { connectDB } from './config/database';
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
 
-// JSON formatındaki istekleri okuyabilmek için middleware
 app.use(express.json());
 
-// Şemadaki "Health Endpoints" (Sağlık Kontrolü)
+// Veritabanı Bağlantısı
+connectDB();
+
+// API Rotaları
+app.use('/api/auth', authRoutes);
+
 app.get('/healthz', (req: Request, res: Response) => {
   res.status(200).json({
     status: 'OK',

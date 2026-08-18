@@ -1,7 +1,4 @@
-version: '3.8'
-
 services:
-  # Container 2: Database (PostgreSQL)
   postgres:
     image: postgres:15-alpine
     container_name: book_app_db
@@ -11,18 +8,17 @@ services:
       POSTGRES_PASSWORD: secretpassword
       POSTGRES_DB: book_app
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # Container 3: Message Broker (RabbitMQ)
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: book_app_rabbitmq
     restart: always
     ports:
-      - "5672:5672"   # AMQP protocol portu
-      - "15672:15672" # RabbitMQ Management Dashboard portu
+      - "5672:5672"
+      - "15672:15672"
 
 volumes:
   postgres_data:
