@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { connectDB } from './config/database';
 import authRoutes from './routes/authRoutes';
+import bookRoutes from './routes/bookRoutes';
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ connectDB();
 
 // API Rotaları
 app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/books', bookRoutes);
 
 app.get('/healthz', (req: Request, res: Response) => {
   res.status(200).json({
