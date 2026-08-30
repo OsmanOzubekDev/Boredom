@@ -1,0 +1,47 @@
+services:
+  # 1. Konteynır: Node.js / Express Backend API
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: book_app_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: admin
+      DB_PASSWORD: secretpassword
+      DB_NAME: book_app
+      JWT_SECRET: super_secret_jwt_key_12345
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  # 2. Konteynır: PostgreSQL Veritabanı
+  postgres:
+    image: postgres:15-alpine
+    container_name: book_app_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: book_app
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 3. Konteynır: RabbitMQ Mesaj Kuyruğu
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: book_app_rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  postgres_data:
