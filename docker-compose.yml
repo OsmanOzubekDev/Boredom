@@ -25,7 +25,7 @@ services:
   # 2. Konteynır: PostgreSQL Veritabanı
   postgres:
     image: postgres:15-alpine
-    container_name: book_app_db
+    container_name: book_app
     restart: always
     environment:
       POSTGRES_USER: admin

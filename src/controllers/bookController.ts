@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { BookService } from '../services/bookService';
 import { ExternalBookService } from '../services/externalBookService';
 import { CustomError } from '../middlewares/errorHandler';
+import { sendBookNotification } from '../config/rabbitmq';
 
 const bookService = new BookService();
 const externalBookService = new ExternalBookService();
@@ -35,6 +36,14 @@ export const getBook = async (req: Request, res: Response, next: NextFunction) =
 export const createBook = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const newBook = await bookService.createBook(req.body);
+
+    // RabbitMQ kuyruğuna mesajı gönderiyoruz
+    await sendBookNotification({
+      event: 'BOOK_CREATED',
+      title: newBook.title,
+      timestamp: new Date()
+    });
+
     res.status(201).json(newBook);
   } catch (error) {
     next(error);
