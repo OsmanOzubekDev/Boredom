@@ -1,6 +1,12 @@
 import { Response } from 'express';
 import { AuthRequest } from '../middlewares/authMiddleware';
 import { BookService } from '../services/bookService';
+<<<<<<< Updated upstream
+=======
+import { ExternalBookService } from '../services/externalBookService';
+import { CustomError } from '../middlewares/errorHandler';
+import { sendBookNotification } from '../config/rabbitmq';
+>>>>>>> Stashed changes
 
 const bookService = new BookService();
 
@@ -25,8 +31,20 @@ export const getBook = async (req: AuthRequest, res: Response) => {
 
 export const createBook = async (req: AuthRequest, res: Response) => {
   try {
+<<<<<<< Updated upstream
     const bookData = { ...req.body, user_id: req.user?.id };
     const newBook = await bookService.createBook(bookData);
+=======
+    const newBook = await bookService.createBook(req.body);
+
+    // RabbitMQ kuyruğuna mesajı gönderiyoruz
+    await sendBookNotification({
+      event: 'BOOK_CREATED',
+      title: newBook.title,
+      timestamp: new Date()
+    });
+
+>>>>>>> Stashed changes
     res.status(201).json(newBook);
   } catch (error: any) {
     res.status(error.statusCode || 500).json({ error: error.message });
