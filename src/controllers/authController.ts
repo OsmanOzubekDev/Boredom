@@ -18,15 +18,15 @@ export const register = async (req: Request, res: Response) => {
     const result = await pool.query(query, values);
 
     res.status(201).json({
-      message: 'Kullanıcı başarıyla kaydedildi!',
+      message: 'Successfully saved!',
       user: result.rows[0]
     });
   } catch (error: any) {
     console.error(error);
     if (error.code === '23505') {
-      return res.status(400).json({ error: 'Kullanıcı adı veya email zaten kullanımda.' });
+      return res.status(400).json({ error: 'Username or email is already in use.' });
     }
-    res.status(500).json({ error: 'Kayıt işlemi başarısız oldu.' });
+    res.status(500).json({ error: 'Registration failed.' });
   }
 };
 
@@ -37,14 +37,14 @@ export const login = async (req: Request, res: Response) => {
   try {
     const userResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     if (userResult.rows.length === 0) {
-      return res.status(400).json({ error: 'Geçersiz email veya şifre.' });
+      return res.status(400).json({ error: 'Invalid email or password.' });
     }
 
     const user = userResult.rows[0];
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ error: 'Geçersiz email veya şifre.' });
+      return res.status(400).json({ error: 'Invalid email or password.' });
     }
 
     const token = jwt.sign(
@@ -54,7 +54,7 @@ export const login = async (req: Request, res: Response) => {
     );
 
     res.status(200).json({
-      message: 'Giriş başarılı!',
+      message: 'Login successful!',
       token,
       user: {
         id: user.id,
@@ -64,14 +64,14 @@ export const login = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Giriş işlemi sırasında bir hata oluştu.' });
+    res.status(500).json({ error: 'An error occurred during the login process.' });
   }
 };
 
 // 3. Kullanıcı Profil Bilgisi (Korumalı Rota Testi)
 export const getMe = async (req: AuthRequest, res: Response) => {
   res.status(200).json({
-    message: 'Korumalı rotaya erişim başarılı!',
+    message: 'Protected route access successful!',
     user: req.user
   });
 };

@@ -16,7 +16,7 @@ export const errorHandler = (
   next: NextFunction 
 ) => {
   const statusCode = err instanceof CustomError ? err.statusCode : 500;
-  const message = err.message || 'Sunucu içi beklenmeyen bir hata oluştu.';
+  const message = err.message || 'Something went wrong in server.';
 
   console.error(`[Error Handler] ${req.method} ${req.url} -> Status: ${statusCode} | Message: ${message}`);
 

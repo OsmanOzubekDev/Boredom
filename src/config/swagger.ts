@@ -6,12 +6,12 @@ const options: swaggerJSDoc.Options = {
     info: {
       title: 'Book & Library Management API',
       version: '1.0.0',
-      description: 'Node.js, Express, TypeScript ve PostgreSQL ile geliştirilmiş Kitap Yönetim API\'si'
+      description: 'Book Management API developed using Node.js, Express, TypeScript, PostgreSQL, and MongoDB'
     },
     servers: [
       {
         url: 'http://localhost:3000',
-        description: 'Yerel Sunucu'
+        description: 'Local Server'
       }
     ],
     components: {
@@ -24,7 +24,12 @@ const options: swaggerJSDoc.Options = {
       }
     }
   },
-  apis: ['./src/routes/*.ts']
+  // Hem geliştirme ortamındaki (.ts) hem derlenmiş dist klasöründeki (.js) route'ları tarar
+  apis: [
+    './src/routes/*.ts',
+    './dist/routes/*.js',
+    './routes/*.js'
+  ]
 };
 
 export const swaggerSpec = swaggerJSDoc(options);

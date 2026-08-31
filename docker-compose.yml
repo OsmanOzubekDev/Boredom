@@ -15,9 +15,11 @@ services:
       DB_USER: admin
       DB_PASSWORD: secretpassword
       DB_NAME: book_app
+      MONGO_URI: mongodb://mongodb:27017/book_app
       JWT_SECRET: super_secret_jwt_key_12345
     depends_on:
       - postgres
+      - mongodb
       - rabbitmq
 
   # 2. Konteynır: PostgreSQL Veritabanı
@@ -34,7 +36,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  # 3. Konteynır: RabbitMQ Mesaj Kuyruğu
+  # 3. Konteynır: MongoDB Veritabanı (Yorumlar ve Puanlar İçin)
+  mongodb:
+    image: mongo:latest
+    container_name: book_app_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # 4. Konteynır: RabbitMQ Mesaj Kuyruğu
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: book_app_rabbitmq
@@ -45,3 +57,4 @@ services:
 
 volumes:
   postgres_data:
+  mongo_data:

@@ -21,12 +21,12 @@ const router = Router();
  * @openapi
  * /api/books:
  *   get:
- *     summary: Tüm kitapları listeler
+ *     summary: Lists all books
  *     tags:
  *       - Books
  *     responses:
  *       200:
- *         description: Kitap listesi
+ *         description: Book list
  */
 router.get('/', getBooks);
 
@@ -34,7 +34,7 @@ router.get('/', getBooks);
  * @openapi
  * /api/books/external/{isbn}:
  *   get:
- *     summary: Harici API'den ISBN numarasına göre kitap detayı getirir
+ *     summary: Retrieves book details from an external API by ISBN
  *     tags:
  *       - Books
  *     parameters:
@@ -46,7 +46,7 @@ router.get('/', getBooks);
  *         example: "9780132350884"
  *     responses:
  *       200:
- *         description: Harici kitap bilgileri
+ *         description: External book information
  */
 router.get('/external/:isbn', getExternalBookInfo);
 
@@ -54,7 +54,7 @@ router.get('/external/:isbn', getExternalBookInfo);
  * @openapi
  * /api/books/{id}:
  *   get:
- *     summary: ID'ye göre kitap detayı getirir
+ *     summary: Retrieves book details by ID
  *     tags:
  *       - Books
  *     parameters:
@@ -66,9 +66,9 @@ router.get('/external/:isbn', getExternalBookInfo);
  *         example: 1
  *     responses:
  *       200:
- *         description: Kitap detayı
+ *         description: Book details
  *       404:
- *         description: Kitap bulunamadı
+ *         description: Book not found
  */
 router.get('/:id', getBook);
 
@@ -76,7 +76,7 @@ router.get('/:id', getBook);
  * @openapi
  * /api/books:
  *   post:
- *     summary: Yeni bir kitap ekler (JWT Auth gerekli)
+ *     summary: Creates a new book (JWT Auth required)
  *     tags:
  *       - Books
  *     security:
@@ -105,11 +105,11 @@ router.get('/:id', getBook);
  *                 example: "A Handbook of Agile Software Craftsmanship"
  *     responses:
  *       201:
- *         description: Kitap oluşturuldu
+ *         description: Book created successfully
  *       400:
- *         description: Geçersiz veri
+ *         description: Invalid data
  *       401:
- *         description: Yetkisiz erişim
+ *         description: Unauthorized access
  */
 router.post('/', authenticateToken, validate(createBookSchema), createBook);
 
@@ -117,7 +117,7 @@ router.post('/', authenticateToken, validate(createBookSchema), createBook);
  * @openapi
  * /api/books/{id}:
  *   put:
- *     summary: Kitap bilgilerini tamamen günceller (JWT Auth gerekli)
+ *     summary: Updates book information completely (JWT Auth required)
  *     tags:
  *       - Books
  *     security:
@@ -153,11 +153,11 @@ router.post('/', authenticateToken, validate(createBookSchema), createBook);
  *                 example: "Improving the Design of Existing Code"
  *     responses:
  *       200:
- *         description: Kitap güncellendi
+ *         description: Book updated successfully
  *       401:
- *         description: Yetkisiz erişim
+ *         description: Unauthorized access
  *       404:
- *         description: Kitap bulunamadı
+ *         description: Book not found
  */
 router.put('/:id', authenticateToken, validate(createBookSchema), updateBookPut);
 
@@ -165,7 +165,7 @@ router.put('/:id', authenticateToken, validate(createBookSchema), updateBookPut)
  * @openapi
  * /api/books/{id}:
  *   patch:
- *     summary: Kitap bilgilerini kısmi günceller (JWT Auth gerekli)
+ *     summary: Updates book information partially (JWT Auth required)
  *     tags:
  *       - Books
  *     security:
@@ -195,9 +195,9 @@ router.put('/:id', authenticateToken, validate(createBookSchema), updateBookPut)
  *                 example: "Güncellenmiş açıklama"
  *     responses:
  *       200:
- *         description: Kitap güncellendi
+ *         description: Book updated successfully
  *       401:
- *         description: Yetkisiz erişim
+ *         description: Unauthorized access
  */
 router.patch('/:id', authenticateToken, validate(updateBookPatchSchema), updateBookPatch);
 
@@ -205,7 +205,7 @@ router.patch('/:id', authenticateToken, validate(updateBookPatchSchema), updateB
  * @openapi
  * /api/books/{id}:
  *   delete:
- *     summary: Kitap siler (JWT Auth gerekli)
+ *     summary: Deletes a book (JWT Auth required)
  *     tags:
  *       - Books
  *     security:
@@ -219,11 +219,11 @@ router.patch('/:id', authenticateToken, validate(updateBookPatchSchema), updateB
  *         example: 1
  *     responses:
  *       204:
- *         description: Silindi
+ *         description: Deleted successfully
  *       401:
- *         description: Yetkisiz erişim
+ *         description: Unauthorized access
  *       404:
- *         description: Kitap bulunamadı
+ *         description: Book not found
  */
 router.delete('/:id', authenticateToken, deleteBook);
 

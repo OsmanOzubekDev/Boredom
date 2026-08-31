@@ -5,10 +5,10 @@ import { z, ZodError } from 'zod';
 export const createBookSchema = z.object({
   title: z
     .string()
-    .min(1, 'Başlık (title) zorunludur ve boş olamaz'),
+    .min(1, 'Title is required and cannot be empty'),
   author: z
     .string()
-    .min(1, 'Yazar (author) zorunludur ve boş olamaz'),
+    .min(1, 'Author is required and cannot be empty'),
   isbn: z.string().optional(),
   description: z.string().optional()
 });

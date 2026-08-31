@@ -34,9 +34,9 @@ export const initDb = async () => {
   `;
   try {
     await pool.query(queryText);
-    console.log('✅ Tablolar 5433 portundaki veritabanında başarıyla oluşturuldu.');
+    console.log('The tables were successfully created in the database on port 5433');
   } catch (err) {
-    console.error('❌ Tablo oluşturma hatası:', err);
+    console.error('Error while creating tables:', err);
   }
 };
 

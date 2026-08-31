@@ -24,7 +24,7 @@ export const getBook = async (req: Request, res: Response, next: NextFunction) =
     const { id } = req.params;
     const book = await bookService.getBookById(Number(id));
     if (!book) {
-      throw new CustomError(404, 'Kitap bulunamadı');
+      throw new CustomError(404, 'Book not found');
     }
     res.json(book);
   } catch (error) {

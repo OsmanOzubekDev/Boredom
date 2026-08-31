@@ -7,7 +7,7 @@ const router = Router();
  * @openapi
  * /api/auth/register:
  *   post:
- *     summary: Yeni kullanıcı kaydı oluşturur
+ *     summary: Create a new user account
  *     tags:
  *       - Auth
  *     requestBody:
@@ -32,7 +32,7 @@ const router = Router();
  *                 example: osman123
  *     responses:
  *       201:
- *         description: Kullanıcı başarıyla oluşturuldu
+ *         description: User created successfully
  */
 router.post('/register', register);
 
@@ -40,7 +40,7 @@ router.post('/register', register);
  * @openapi
  * /api/auth/login:
  *   post:
- *     summary: Kullanıcı girişi yapar ve JWT token döner
+ *     summary: User logs in and receives a JWT token
  *     tags:
  *       - Auth
  *     requestBody:
@@ -65,7 +65,7 @@ router.post('/register', register);
  *                 example: osman123
  *     responses:
  *       200:
- *         description: Başarılı giriş ve JWT token
+ *         description: Login successful and JWT token returned
  */
 router.post('/login', login);
 

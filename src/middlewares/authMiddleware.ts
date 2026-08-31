@@ -17,7 +17,7 @@ export const authenticateToken = (
   const token = authHeader && authHeader.split(' ')[1]; // "Bearer TOKEN" formatından token'ı al
 
   if (!token) {
-    return res.status(401).json({ error: 'Erişim reddedildi. Token bulunamadı.' });
+    return res.status(401).json({ error: 'Access denied. Token not found.' });
   }
 
   try {
@@ -29,6 +29,6 @@ export const authenticateToken = (
     req.user = decoded;
     next(); // İstek bir sonraki middleware veya controller'a geçsin
   } catch (error) {
-    return res.status(403).json({ error: 'Geçersiz veya süresi dolmuş token.' });
+    return res.status(403).json({ error: 'Invalid or expired token.' });
   }
 };
