@@ -21,12 +21,6 @@ A robust, scalable backend service built with **Node.js**, **Express**, **TypeSc
 
 Ensure you have **Docker** and **Docker Compose** installed.
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repo-url>
-   cd Boredom-main
-
-
 🚀 Start all services:
     docker compose up -d --build    
 
